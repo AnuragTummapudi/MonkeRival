@@ -1,18 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
-interface TypingTestProps {
-  mode: 'time' | 'words' | 'quote' | 'custom';
-  timeLimit: number;
-}
-
 const sampleText = "The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump! The five boxing wizards jump quickly. Sphinx of black quartz, judge my vow.";
 
-const TypingTest: React.FC<TypingTestProps> = ({ mode, timeLimit }) => {
-  const [text, setText] = useState(sampleText.split(''));
+function TypingTest({ mode, timeLimit }) {
+  const [text] = useState(sampleText.split(''));
   const [input, setInput] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [startTime, setStartTime] = useState<number | null>(null);
+  const [startTime, setStartTime] = useState(null);
   const [wpm, setWpm] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [mistakes, setMistakes] = useState(0);
@@ -24,7 +19,7 @@ const TypingTest: React.FC<TypingTestProps> = ({ mode, timeLimit }) => {
     return Math.round(wordsTyped / timeElapsed);
   }, [startTime, input]);
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+  const handleKeyDown = useCallback((e) => {
     if (!startTime) {
       setStartTime(Date.now());
     }
@@ -56,7 +51,9 @@ const TypingTest: React.FC<TypingTestProps> = ({ mode, timeLimit }) => {
       >
         <div className="mb-4 flex justify-between items-center">
           <div className="text-2xl font-bold text-blue-500">{wpm} WPM</div>
-          <div className="text-gray-400">Accuracy: {Math.max(0, Math.round((input.length - mistakes) / Math.max(input.length, 1) * 100))}%</div>
+          <div className="text-gray-400">
+            Accuracy: {Math.max(0, Math.round((input.length - mistakes) / Math.max(input.length, 1) * 100))}%
+          </div>
         </div>
 
         <div className="font-mono text-lg leading-relaxed relative">
@@ -89,6 +86,6 @@ const TypingTest: React.FC<TypingTestProps> = ({ mode, timeLimit }) => {
       </motion.div>
     </div>
   );
-};
+}
 
 export default TypingTest;

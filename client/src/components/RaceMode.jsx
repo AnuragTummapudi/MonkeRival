@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Users, Timer } from 'lucide-react';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 
-interface RaceModeProps {
-  mode: 'race' | 'friend';
-}
-
-interface Player {
-  id: string;
-  progress: number;
-  wpm: number;
-  accuracy: number;
-}
-
-const RaceMode: React.FC<RaceModeProps> = ({ mode }) => {
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const [roomCode, setRoomCode] = useState<string>('');
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [gameState, setGameState] = useState<'waiting' | 'countdown' | 'racing' | 'finished'>('waiting');
+function RaceMode({ mode }) {
+  const [socket, setSocket] = useState(null);
+  const [roomCode, setRoomCode] = useState('');
+  const [players, setPlayers] = useState([]);
+  const [gameState, setGameState] = useState('waiting');
   const [countdown, setCountdown] = useState(3);
   const [text, setText] = useState('');
   const [input, setInput] = useState('');
@@ -75,7 +63,7 @@ const RaceMode: React.FC<RaceModeProps> = ({ mode }) => {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e) => {
     if (gameState !== 'racing') return;
 
     if (e.key === text[currentIndex]) {
