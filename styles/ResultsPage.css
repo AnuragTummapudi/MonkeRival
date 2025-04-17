@@ -1,0 +1,21 @@
+.results-page {
+    color: #fff;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+}
+
+.stats {
+    margin-bottom: 20px;
+}
+
+.stats p {
+    margin: 5px 0;
+}
+
+.graph {
+    margin-top: 20px;
+}
